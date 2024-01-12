@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Update</title>
+</head>
+<style>
+    .go-back-button {
+position: absolute;
+top: 10px; /* Adjust the distance from the top */
+left: 1200px; /* Adjust the distance from the left */
+display: inline-block;
+padding: 10px 20px;
+background-color: purple;
+color: #fff;
+text-decoration: none;
+border-radius: 5px;
+font-weight: bold;
+}
+
+.go-back-button:hover {
+background-color: #0056b3;
+}
+</style>
+<body>
+    <form action="" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{ff.media}}
+        {{ff.as_p}}
+        <button type="submit" >update</button>
+        
+
+    </form>
+	<a href="javascript:history.go(-1)" class="go-back-button">Go Back</a>
+
+    
+</body>
+</html>

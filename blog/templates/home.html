@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Home</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add a scroll event listener
+            window.addEventListener("scroll", function () {
+                // Check if the user has scrolled to the bottom of the page
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                    // If scrolled to the bottom, display the footer
+                    document.querySelector('.footer').style.display = 'block';
+                } else {
+                    // If not scrolled to the bottom, hide the footer
+                    document.querySelector('.footer').style.display = 'none';
+                }
+            });
+        });
+    </script>
+    
+
+    <style>
+        /* Your CSS styles here */
+        @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap");
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            font-family: "Roboto", sans-serif;
+            font-size: 12px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            
+            background-color: #ffffff;
+            background-size: cover;
+        }
+
+        .nav-links {
+            width: 100%;
+            padding: 20px 15px;
+         
+            color: white; /* Set the text color */
+            text-align: center;
+        }
+
+        .nav-links ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links li {
+            margin: 0 10px;
+        }
+
+        .nav-links li a {
+            position: relative;
+            color: black; 
+            font-size: 17px;
+ 
+            padding: 6px 10px; 
+            text-decoration: none;
+        }
+
+        .nav-links li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 3px;
+            width: 0%;
+            background: palevioletred;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links li a:hover:before {
+            width: 100%;
+        }
+
+        .blog-container {
+            margin-top: 20px; 
+        }
+
+        .blog_post {
+          
+            max-width: 700px;
+          
+            margin: 60px auto; 
+            transition: box-shadow 0.3s ease;
+        }
+
+        .blog_post:hover {
+            box-shadow: 2px 2px 4rem rgba(0, 0, 0, 0.2);
+        }
+
+        .container_copy {
+            padding: 2rem;
+        }
+
+        h3 {
+            font-family: "Roboto", sans-serif;
+            margin: 0.5rem 0;
+            color: black;
+            font-size: 1.20rem;
+        }
+
+        h1 {
+            font-family: "Roboto", sans-serif;
+
+            margin: 1rem 0;
+            font-size: 2rem;
+            letter-spacing: 0.5px;
+            color: purple;
+        }
+
+        p {
+            font-family: Arial, Helvetica, sans-serif;    
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+            line-height: 1.45;
+            color: black;
+        }
+
+        @media only screen and (max-width: 650px) {
+            body {
+                background-color: black;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .read-more-link {
+            cursor: pointer;
+            color: purple;
+            text-decoration: underline;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 200px;
+        }
+
+        .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .step-links a {
+        color: blueviolet; /* Blue color, you can change this to your preferred color */
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: bold;
+    }
+
+    .current-page {
+        font-size: large;
+        margin: 0 10px;
+    }
+
+
+        ul.li.filter-form {
+            margin-top: 20px;
+            padding: 15px;
+      
+            border-radius: 10px;
+  
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        .filter-form label {
+            font-size: 10px;
+        }
+    
+        .filter-form select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        .filter-form button {
+            padding: 6px;
+            font-size: 12px;
+            background-color: purple;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .filter-form button:hover {
+            background-color: darkpurple;
+        }
+        a{
+            text-decoration: none;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #FFF5FF;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="nav-links">
+        <ul>
+            <li style="margin-right: 720px;font-size:30px;color: blueviolet;" class="upward">BLOGHub</li>
+            <li class="center"><a href="/signup">SIGNUP</a></li>
+            <li class="upward"><a href="/login">LOGIN</a></li>
+            <li >    <div class="filter-form">
+                <form method="GET" action="/home">
+                    <label style="color: black;" for="category">Filter :</label>
+                    <select name="category" id="category">
+                        <option value="">All Categories</option>
+                        {% for i in c %}
+                            <option  value="{{ i.cate }}">{{ i.cate }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+            </div></li>
+        </ul>
+    </div>
+    
+
+
+    <div class="blog-container">
+        {% for i in data %}
+        <a href="/fullp/{{i.id}}">
+        <div class="blog_post">
+            <div class="container_copy">
+                <h3 style="padding-left: 300px;color: blueviolet;">{{i.category}}</h3>
+                <h3>{{i.date}}</h3>
+                <h1>{{i.title}}</h1>
+                <p>{{ i.content|slice:":200"|safe }}...</p>
+                <h2 style="color: purple;">by {{i.author}}</h2>
+            </div>
+        </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if data.has_previous %}
+                <a style="font-size: large;" href="?page=1">&laquo; first</a>
+                <a style="font-size: large;" href="?page={{ data.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current-page">
+                Page {{ data.number }} of {{ data.paginator.num_pages }}.
+            </span>
+
+            {% if data.has_next %}
+                <a style="font-size: large;" href="?page={{ data.next_page_number }}">next</a>
+                <a style="font-size: large;" href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    <div class="footer">
+        <p style="color: purple;">&copy; 2023  BLOGhub. All rights reserved.</p>
+        <p style="color: purple;">Contact Us:</p>
+        <p style="color: purple;" >Phone: +1 (123) 456-7890</p>
+        <p style="color: purple;" >Email: info@example.com</p>
+
+    </div>
+
+</body>
+
+</html>

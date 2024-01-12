@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Profile Details</title>
+    <style>
+        .go-back-button {
+    position: absolute;
+    top: 10px; /* Adjust the distance from the top */
+    left: 1200px; /* Adjust the distance from the left */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: purple;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    }
+    
+    .go-back-button:hover {
+    background-color: #0056b3;
+    }
+    </style>
+</head>
+<body>
+	<a href="javascript:history.go(-1)" class="go-back-button">Go Back</a>
+
+    <form action="" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" >save</button>
+
+    </form>
+    
+</body>
+</html>

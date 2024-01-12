@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Post</title>
+    <style>
+        .go-back-button {
+    position: absolute;
+    top: 10px; /* Adjust the distance from the top */
+    left: 1200px; /* Adjust the distance from the left */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: purple;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.go-back-button:hover {
+    background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+    <form action="" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{bpost.media}}
+        {{bpost.as_p}}
+        <button style="font-size: large;" type="submit" >save</button>
+
+    </form>
+	<a href="javascript:history.go(-1)" class="go-back-button">Go Back</a>
+
+    
+</body>
+</html>

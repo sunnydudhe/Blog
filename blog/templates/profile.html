@@ -1,0 +1,277 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>User Profile</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- HTML content -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const readMoreLinks = document.querySelectorAll(".read-more-link");
+
+        readMoreLinks.forEach(link => {
+            link.addEventListener("click", function(e) {
+                e.preventDefault();
+                const contentId = this.getAttribute("data-toggle");
+                const fullContent = document.getElementById(contentId);
+
+                if (fullContent.style.display === "none" || fullContent.style.display === "") {
+                    fullContent.style.display = "block";
+                    this.textContent = "Read Less";
+                } else {
+                    fullContent.style.display = "none";
+                    this.textContent = "Read More";
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+    <style>
+        /* Your CSS styles here */
+        @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap");
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            font-family: "Roboto", sans-serif;
+            font-size: 12px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column; /* Make the content flow from top to bottom */
+            background-color: #ffffff;
+
+            background-size: cover;
+            /*background: #1488cc;
+          
+            background: -webkit-linear-gradient(to right, #92a8d1, whitesmoke);
+            background: linear-gradient(to right, #92a8d1, whitesmoke);*/
+        }
+
+        .nav-links {
+            width: 100%;
+            padding: 20px 15px;
+         
+            color: white; /* Set the text color */
+            text-align: center;
+        }
+
+        .nav-links ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links li {
+            margin: 0 10px;
+        }
+
+        .nav-links li a {
+            position: relative;
+            color: black; 
+            font-size: 17px;
+ 
+            padding: 6px 10px; 
+            text-decoration: none;
+        }
+
+        .nav-links li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 3px;
+            width: 0%;
+            background: palevioletred;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links li a:hover:before {
+            width: 100%;
+        }
+
+        .blog-container {
+            margin-top: 40px; /* Add some spacing between the navigation and the content */
+        }
+
+        .blog_post {
+            background: whitesmoke ;
+            max-width: 700px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.2);
+            margin: 30px auto; /* Center the content */
+        }
+
+        .container_copy {
+            padding: 2rem;
+        }
+
+        h3 {
+            margin: 0 0 0.5rem 0;
+            color: black;
+            font-size: 1.25rem;
+        }
+
+        h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            letter-spacing: 0.5px;
+            color: purple;
+        }
+
+        p {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+            line-height: 1.45;
+            color: #333;
+      
+        }
+
+        @media only screen and (max-width: 650px) {
+            body {
+                background-color: black;
+            }
+        }
+        /* Style for the blog post container */
+        .blog_post {
+            position: relative;
+        }
+
+        /* Style for the edit and delete icons */
+        .edit-delete-icons {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: 10px; /* Adjust the top value to move the icons up or down within the card */
+            right: 10px; /* Adjust the right value to move the icons left or right within the card */
+        }
+
+        .edit-delete-icons li {
+            display: inline-block;
+            margin-left: 10px; /* Adjust the margin between icons */
+        }
+
+        .edit-delete-icons a {
+            text-decoration: none;
+        }
+
+        /* Style for the edit icon */
+        .edit-delete-icons a i.fas.fa-edit {
+            color: lightgray;
+            font-size: 28px;
+        }
+
+  
+        .edit-delete-icons a i.fas.fa-trash {
+            color: red;
+            font-size: large;
+
+        }
+
+        .hidden {
+            display: none;
+        }
+    
+        .read-more-link {
+            cursor: pointer;
+            color: purple;
+            text-decoration: underline;
+        }
+
+
+        
+
+    </style>
+</head>
+<body>
+    <div class="nav-links">
+        <ul>
+            
+            <li><a href="/pro">Hi {{u.username}}</a></li>
+             
+            <li class="forward"><a href="/logout">LOGOUT</a></li>
+            <li class="forward"><a href="/post" >CREATE BLOG</a></li>
+   
+        </ul>
+    </div>
+
+{% if p %}
+    <div class="blog-container">
+        {% for i in p %}
+        <div class="blog_post">
+            {% if i.image and i.image.url %}
+            <img src="{{ i.image.url }}" alt="{{ i.title }}" class="blog-image" style="width: 100%;height:450px ;">
+            {% else %}
+            <p>no image</p>
+            {% endif %}
+
+
+            <div class="container_copy">
+                <h3 style="padding-left: 290px;">{{i.category}}</h3>
+                <h3>{{i.date}}</h3>
+                <h1>{{i.title}}</h1>
+                {% if i.content|length > 300 %}
+    <p>{{ i.content|slice:":300"|safe }} <a href="#" class="read-more-link" data-toggle="content-{{ i.id }}" style="font-weight: bolder;" >Read More</a></p>
+    <div id="content-{{ i.id }}" class="full-content hidden">{{ i.content|safe }}</div>
+{% else %}
+    <p>{{ i.content|safe }}</p>
+{% endif%}
+                <h2 style="color: purple;" >by {{u.username}}</h2>
+                <br><br>
+
+                <ul class="edit-delete-icons">
+                    <li>
+                        <a href="/edit/{{i.id}}">
+                            <i class="fas fa-edit" title="Edit"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <form onsubmit="return confirm('Are you sure you want to delete this post?');" action="/delet/{{i.id}}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" style="font-size: 25px; color: red;" >
+                                <i class="fas fa-trash" title="Delete"></i>
+                            </button>
+                        </form>
+                    </li>
+                    
+                </ul>
+                        {% for comment in i.comment_set.all %}
+                        <div class="comment">
+                        <p><strong>{{ comment.name }}</strong> ({{ comment.email }}) said:</p>
+                        <p>{{ comment.text }}</p>
+                        <hr>
+                        </div>
+                        {% empty %}
+                        <p>No comments yet.</p>
+                        {% endfor %}
+                        
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+    <p style="margin-top: 200px;margin-left: 650px;font-family: Arial, Helvetica, sans-serif;font-size: 20px;" >No Post</p>
+    {% endif %}
+
+
+                       
+</body>
+</html>
